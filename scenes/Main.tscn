@@ -1,12 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://main"]
+[gd_scene load_steps=3 format=3 uid="uid://main"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://player" path="res://scenes/Player.tscn" id="2_player"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 0)
+smoothing_enabled = true
+smoothing_speed = 12.0
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(0, 0)
 
+[node name="Floor" type="TileMapLayer" parent="."]
+
+[node name="Walls" type="TileMapLayer" parent="."]
