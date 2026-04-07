@@ -1,7 +1,7 @@
 # Godot 4+
 .godot/
 *.import
-export_presets.cfg
+# export_presets.cfg is now tracked
 
 # OS
 .DS_Store
