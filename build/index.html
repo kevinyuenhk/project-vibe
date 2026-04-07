@@ -11,48 +11,63 @@ canvas { display: block; width: 100%; height: 100%; }
 #loading h1 { font-size: 2em; margin-bottom: 1em; }
 #loading .bar { width: 200px; height: 4px; background: #333; border-radius: 2px; overflow: hidden; }
 #loading .bar-fill { width: 0%; height: 100%; background: #4488ff; transition: width 0.3s; }
+#loading p { margin-top: 1em; color: #888; }
 </style>
 </head>
 <body>
 <div id="loading">
-  <h1>⚔️ Project Vibe</h1>
+  <h1>&#9876;&#65039; Project Vibe</h1>
   <div class="bar"><div class="bar-fill" id="progress"></div></div>
-  <p style="margin-top:1em;color:#888">Loading dungeon...</p>
+  <p id="status">Loading dungeon...</p>
 </div>
+<script src="index.js"></script>
 <script>
-// Attempt to set COOP/COEP via Service Worker for SharedArrayBuffer support
-if ('serviceWorker' in navigator) {
-  const swContent = `
-    self.addEventListener('install', () => self.skipWaiting());
-    self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
-    self.addEventListener('fetch', event => {
-      if (event.request.mode === 'navigate') {
-        event.respondWith(
-          fetch(event.request).then(response => {
-            const headers = new Headers(response.headers);
-            headers.set('Cross-Origin-Opener-Policy', 'same-origin');
-            headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
-            return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
-          })
-        );
-      } else {
-        event.respondWith(fetch(event.request));
-      }
+(function () {
+  var GODOT_CONFIG = {
+    args: [],
+    canvasResizePolicy: 2,
+    executable: 'index',
+    experimentalVK: false,
+    fileSizes: { 'index.pck': 20328, 'index.wasm': 37013224 },
+    focusCanvas: true,
+    gdnativeLibs: [],
+  };
+
+  function startEngine() {
+    var engine = new Engine(GODOT_CONFIG);
+    engine.startGame({
+      onProgress: function (current, total) {
+        if (total > 0) {
+          var el = document.getElementById('progress');
+          if (el) el.style.width = Math.round((current / total) * 100) + '%';
+        }
+      },
+    }).then(function () {
+      var el = document.getElementById('loading');
+      if (el) el.remove();
+    }).catch(function (err) {
+      var el = document.getElementById('status');
+      if (el) el.textContent = 'Failed to load: ' + (err.message || err);
+      console.error('Godot failed to start:', err);
     });
-  `;
-  const blob = new Blob([swContent], { type: 'application/javascript' });
-  const swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).then(() => {
-    // Reload to apply headers
-    if (!crossOriginIsolated) {
+  }
+
+  // Register the COI service worker so COOP/COEP headers are set on all
+  // responses. This enables SharedArrayBuffer, which Godot needs for threads.
+  // On the first visit the page reloads once after SW activation; subsequent
+  // visits start the engine immediately.
+  if (!crossOriginIsolated && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./coi-serviceworker.js').then(function () {
       window.location.reload();
-    }
-  }).catch(() => {
-    console.warn('SW registration failed, SharedArrayBuffer may not work');
-  });
-}
+    }).catch(function (err) {
+      console.warn('COI service worker registration failed:', err);
+      // Try anyway – will likely fail only if SharedArrayBuffer is needed
+      startEngine();
+    });
+  } else {
+    startEngine();
+  }
+}());
 </script>
-$GODOT_SCRIPT
 </body>
 </html>
-
