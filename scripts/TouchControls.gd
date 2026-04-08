@@ -1,67 +1,79 @@
-## Virtual joystick + touch controls for mobile/web
+## Virtual joystick + touch controls — web/mobile compatible
+## Uses _unhandled_input so UI panels don't eat touch events
 extends Control
 
-@export var speed: float = 200.0
-@export var joystick_size: float = 120.0
-@export var deadzone: float = 15.0
+@export var joystick_radius: float = 60.0
+@export var deadzone: float = 12.0
 
-var _touch_index: int = -1
-var _origin: Vector2 = Vector2.ZERO
-var _direction := Vector2.ZERO
-var _attacking := false
+var _joystick_touch: int = -1
+var _joystick_origin: Vector2 = Vector2.ZERO
+var _joystick_dir := Vector2.ZERO
 
 signal move(direction: Vector2)
 signal attack()
 signal dash()
 
 func _ready() -> void:
-	# Make this fill the screen
 	anchors_preset = Control.PRESET_FULL_RECT
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	z_index = 100  # above everything
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
+	var viewport_w = get_viewport().get_visible_rect().size.x
+	var viewport_h = get_viewport().get_visible_rect().size.y
+
 	if event is InputEventScreenTouch:
-		var touch := event as InputEventScreenTouch
-		if touch.pressed:
-			# Left side = joystick, Right side = attack/dash
-			if touch.position.x < get_viewport_rect().size.x * 0.5:
-				_touch_index = touch.index
-				_origin = touch.position
+		var t := event as InputEventScreenTouch
+		if t.pressed:
+			if t.position.x < viewport_w * 0.4:
+				# Left side → joystick
+				_joystick_touch = t.index
+				_joystick_origin = t.position
+			elif t.position.y < viewport_h * 0.5:
+				# Right-top → dash
+				dash.emit()
 			else:
-				if touch.position.y < get_viewport_rect().size.y * 0.5:
-					dash.emit()
-				else:
-					_attacking = true
-					attack.emit()
+				# Right-bottom → attack
+				attack.emit()
 		else:
-			if touch.index == _touch_index:
-				_touch_index = -1
-				_direction = Vector2.ZERO
+			if t.index == _joystick_touch:
+				_joystick_touch = -1
+				_joystick_dir = Vector2.ZERO
 				move.emit(Vector2.ZERO)
-			if _attacking:
-				_attacking = false
+				queue_redraw()
 
 	elif event is InputEventScreenDrag:
-		var drag := event as InputEventScreenDrag
-		if drag.index == _touch_index:
-			var diff := drag.position - _origin
+		var d := event as InputEventScreenDrag
+		if d.index == _joystick_touch:
+			var diff := d.position - _joystick_origin
 			if diff.length() > deadzone:
-				_direction = diff.normalized()
+				_joystick_dir = diff.normalized()
 			else:
-				_direction = Vector2.ZERO
-			move.emit(_direction)
+				_joystick_dir = Vector2.ZERO
+			move.emit(_joystick_dir)
+			queue_redraw()
 
 func _draw() -> void:
-	# Draw joystick base
-	if _touch_index >= 0:
-		draw_circle(_origin, joystick_size / 2.0, Color(1, 1, 1, 0.15))
-		draw_circle(_origin, joystick_size / 2.0, Color(1, 1, 1, 0.3), 2.0)
-		# Thumb
-		var thumb_pos = _origin + _direction * (joystick_size / 3.0)
-		draw_circle(thumb_pos, joystick_size / 5.0, Color(1, 1, 1, 0.5))
+	var viewport_size = get_viewport().get_visible_rect().size
+	var base_pos = Vector2(viewport_size.x * 0.15, viewport_size.y * 0.7)
+
+	if _joystick_touch >= 0:
+		# Active joystick
+		draw_circle(_joystick_origin, joystick_radius, Color(1, 1, 1, 0.12))
+		draw_circle(_joystick_origin, joystick_radius, Color(1, 1, 1, 0.25), 2.0)
+		var thumb = _joystick_origin + _joystick_dir * joystick_radius * 0.6
+		draw_circle(thumb, 22.0, Color(1, 1, 1, 0.4))
 	else:
-		# Hint circles
-		var screen_size = get_viewport_rect().size
-		var left_pos = Vector2(screen_size.x * 0.15, screen_size.y * 0.7)
-		draw_circle(left_pos, joystick_size / 2.0, Color(1, 1, 1, 0.05))
-		draw_circle(left_pos, joystick_size / 2.0, Color(1, 1, 1, 0.1), 1.5)
+		# Hint ring
+		draw_circle(base_pos, joystick_radius, Color(1, 1, 1, 0.04))
+		draw_circle(base_pos, joystick_radius, Color(1, 1, 1, 0.08), 1.5)
+
+	# Attack button hint (right-bottom)
+	var atk_pos = Vector2(viewport_size.x * 0.82, viewport_size.y * 0.72)
+	draw_circle(atk_pos, 36.0, Color(1, 0.4, 0.3, 0.12))
+	draw_circle(atk_pos, 36.0, Color(1, 0.4, 0.3, 0.25), 2.0)
+
+	# Dash button hint (right-top)
+	var dash_pos = Vector2(viewport_size.x * 0.82, viewport_size.y * 0.45)
+	draw_circle(dash_pos, 28.0, Color(0.3, 0.6, 1, 0.10))
+	draw_circle(dash_pos, 28.0, Color(0.3, 0.6, 1, 0.20), 2.0)
