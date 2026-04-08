@@ -1,7 +1,7 @@
 ## Dungeon Generator — BSP-based random room placement
 extends Node2D
 
-const TILE_SIZE := Vector2i(64, 32)  # isometric tile
+const TILE_SIZE := Vector2i(64, 32)  # 2.5D oblique tile (2:1 ratio)
 const MIN_ROOM_SIZE := 4
 const MAX_ROOM_SIZE := 10
 const ROOM_MARGIN := 1

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://player3d"]
+
+[ext_resource type="Script" path="res://scripts/Player3D.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape3D" id="1_capsule"]
+radius = 0.35
+height = 1.2
+
+[sub_resource type="SphereShape3D" id="2_attack"]
+radius = 0.85
+
+[sub_resource type="CapsuleMesh" id="3_body_mesh"]
+radius = 0.35
+mid_height = 0.7
+
+[sub_resource type="StandardMaterial3D" id="4_body_mat"]
+albedo_color = Color(0.376471, 0.705882, 0.992157, 1)
+metallic = 0.05
+roughness = 0.55
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 1
+collision_mask = 6
+script = ExtResource("1_script")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("3_body_mesh")
+surface_material_override/0 = SubResource("4_body_mat")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.95, 0)
+shape = SubResource("1_capsule")
+
+[node name="AttackArea" type="Area3D" parent="."]
+monitoring = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+position = Vector3(0, 0.8, 0)
+disabled = true
+shape = SubResource("2_attack")

@@ -1,2 +1,7 @@
-res://scenes/Main.tscn::fd8745dc2ca5d7c29ef1fe2a4b38e9b4::1775538238::res://.godot/exported/133200997/export-4a24720ee5e787dbe30abc634fa3679d-Main.scn
-res://scenes/Player.tscn::ff8cec0148806ec1d713e4672b43da66::1775538238::res://.godot/exported/133200997/export-e8220e74d1354b9e6b168b513689419c-Player.scn
+res://scenes/Main.tscn::727d7ac67f64fe0b49dced422fdfa9e0::1775571509::res://.godot/exported/133200997/export-4a24720ee5e787dbe30abc634fa3679d-Main.scn
+res://scenes/Player.tscn::78eb88ec73dd8e652bd895b8cc806f81::1775569461::res://.godot/exported/133200997/export-e8220e74d1354b9e6b168b513689419c-Player.scn
+res://scenes/Enemy.tscn::f5d21747cfd4c04d327040525d0c39eb::1775556059::res://.godot/exported/133200997/export-e8b868f745946f74f22434b9ddd0af8d-Enemy.scn
+res://scenes/Enemy3D.tscn::0a850c44a11c5858272a96d12bf82a44::1775572109::res://.godot/exported/133200997/export-be6710b3b6332acdf9b2737f794af0d7-Enemy3D.scn
+res://scenes/Player3D.tscn::59aa45e780b21ac9e43554c806f9986f::1775574136::res://.godot/exported/133200997/export-9b69143c65b27fd0ef64700642aa10b3-Player3D.scn
+res://scenes/Main3D.tscn::17e4b9f2f1197c69347ff25466ba6bb1::1775573413::res://.godot/exported/133200997/export-95111f9c5f4f9882c913f8e79a7291dd-Main3D.scn
+res://Library/Application Support/Godot/editor_settings-4.6.tres::f37a9b6714bacf03f71190c4887c892e::1775573465::res://.godot/exported/133200997/export-31e3173945f212832ceb4f79842214c4-editor_settings-4.6.res

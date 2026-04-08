@@ -1,10 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://main"]
+[gd_scene load_steps=9 format=3 uid="uid://main3d"]
 
-[ext_resource type="Script" path="res://scripts/Main.gd" id="1_main"]
-[ext_resource type="PackedScene" uid="uid://player" path="res://scenes/Player.tscn" id="2_player"]
-[ext_resource type="Script" path="res://scripts/TouchControls.gd" id="3_touch"]
+[ext_resource type="Script" path="res://scripts/Main3D.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://player3d" path="res://scenes/Player3D.tscn" id="2_player"]
 
-[sub_resource type="StyleBoxFlat" id="1_top_strip"]
+[sub_resource type="Environment" id="1_env"]
+background_mode = 2
+background_color = Color(0.19, 0.2, 0.22, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.61, 0.62, 0.66, 1)
+ambient_light_energy = 1.2
+
+[sub_resource type="StyleBoxFlat" id="2_top_strip"]
 bg_color = Color(0.0588235, 0.0509804, 0.0470588, 0.85)
 border_width_left = 1
 border_width_top = 1
@@ -12,7 +18,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.443137, 0.313726, 0.192157, 0.8)
 
-[sub_resource type="StyleBoxFlat" id="2_gold_frame"]
+[sub_resource type="StyleBoxFlat" id="3_gold_frame"]
 bg_color = Color(0.0823529, 0.0666667, 0.054902, 0.84)
 border_width_left = 2
 border_width_top = 2
@@ -24,7 +30,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="3_slot_style"]
+[sub_resource type="StyleBoxFlat" id="4_slot_style"]
 bg_color = Color(0.0941176, 0.0941176, 0.117647, 0.92)
 border_width_left = 2
 border_width_top = 2
@@ -36,7 +42,7 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxFlat" id="4_orb_style"]
+[sub_resource type="StyleBoxFlat" id="5_orb_style"]
 bg_color = Color(0.533333, 0.0313726, 0.0705882, 0.95)
 border_width_left = 3
 border_width_top = 3
@@ -48,7 +54,7 @@ corner_radius_top_right = 42
 corner_radius_bottom_right = 42
 corner_radius_bottom_left = 42
 
-[sub_resource type="StyleBoxFlat" id="5_mana_style"]
+[sub_resource type="StyleBoxFlat" id="6_mana_style"]
 bg_color = Color(0.0901961, 0.317647, 0.760784, 0.95)
 border_width_left = 2
 border_width_top = 2
@@ -60,7 +66,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="6_chat_style"]
+[sub_resource type="StyleBoxFlat" id="7_chat_style"]
 bg_color = Color(0.0235294, 0.0235294, 0.0313726, 0.72)
 border_width_left = 1
 border_width_top = 1
@@ -72,22 +78,29 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Main" type="Node2D"]
+[node name="Main3D" type="Node3D"]
 script = ExtResource("1_main")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
-smoothing_enabled = true
-smoothing_speed = 12.0
+[node name="CameraRig" type="Node3D" parent="."]
+position = Vector3(0, 11, 11.5)
 
-[node name="World" type="Node2D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+rotation = Vector3(-0.73, 3.14159, 0)
+fov = 45.0
 
-[node name="Floor" type="TileMapLayer" parent="World"]
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-1.0, -0.35, 0)
+light_energy = 2.4
+shadow_enabled = true
 
-[node name="Walls" type="TileMapLayer" parent="World"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("1_env")
 
-[node name="Actors" type="Node2D" parent="World"]
-y_sort_enabled = true
+[node name="World" type="Node3D" parent="."]
+
+[node name="Walls" type="Node3D" parent="World"]
+
+[node name="Actors" type="Node3D" parent="World"]
 
 [node name="Player" parent="World/Actors" instance=ExtResource("2_player")]
 
@@ -96,7 +109,7 @@ y_sort_enabled = true
 [node name="TopStrip" type="Panel" parent="HUD"]
 offset_right = 1280.0
 offset_bottom = 30.0
-theme_override_styles/panel = SubResource("1_top_strip")
+theme_override_styles/panel = SubResource("2_top_strip")
 
 [node name="TopIcons" type="Label" parent="HUD/TopStrip"]
 offset_left = 10.0
@@ -111,7 +124,7 @@ offset_left = 480.0
 offset_top = 34.0
 offset_right = 800.0
 offset_bottom = 124.0
-theme_override_styles/panel = SubResource("2_gold_frame")
+theme_override_styles/panel = SubResource("3_gold_frame")
 
 [node name="BlueScore" type="Label" parent="HUD/TopCenter"]
 offset_left = 12.0
@@ -157,7 +170,7 @@ offset_left = 1072.0
 offset_top = 42.0
 offset_right = 1264.0
 offset_bottom = 292.0
-theme_override_styles/panel = SubResource("2_gold_frame")
+theme_override_styles/panel = SubResource("3_gold_frame")
 
 [node name="MiniMapTitle" type="Label" parent="HUD/MiniMapPanel"]
 offset_left = 13.0
@@ -188,7 +201,7 @@ offset_left = 12.0
 offset_top = 496.0
 offset_right = 374.0
 offset_bottom = 702.0
-theme_override_styles/panel = SubResource("6_chat_style")
+theme_override_styles/panel = SubResource("7_chat_style")
 
 [node name="ChatLog" type="RichTextLabel" parent="HUD/ChatPanel"]
 offset_left = 10.0
@@ -212,7 +225,7 @@ offset_left = 291.0
 offset_top = 556.0
 offset_right = 989.0
 offset_bottom = 712.0
-theme_override_styles/panel = SubResource("2_gold_frame")
+theme_override_styles/panel = SubResource("3_gold_frame")
 
 [node name="StatusLabel" type="Label" parent="HUD/BottomBar"]
 offset_left = 16.0
@@ -231,42 +244,42 @@ columns = 4
 
 [node name="Skill1" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill2" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill3" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill4" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill5" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill6" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill7" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="Skill8" type="Panel" parent="HUD/BottomBar/LeftSkills"]
 custom_minimum_size = Vector2(56, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="HealthOrb" type="Panel" parent="HUD/BottomBar"]
 offset_left = 284.0
 offset_top = 42.0
 offset_right = 420.0
 offset_bottom = 150.0
-theme_override_styles/panel = SubResource("4_orb_style")
+theme_override_styles/panel = SubResource("5_orb_style")
 
 [node name="HPText" type="Label" parent="HUD/BottomBar/HealthOrb"]
 offset_left = 21.0
@@ -282,7 +295,7 @@ offset_left = 206.0
 offset_top = 132.0
 offset_right = 486.0
 offset_bottom = 148.0
-theme_override_styles/panel = SubResource("5_mana_style")
+theme_override_styles/panel = SubResource("6_mana_style")
 
 [node name="ComboLabel" type="Label" parent="HUD/BottomBar"]
 offset_left = 510.0
@@ -303,34 +316,24 @@ columns = 3
 
 [node name="RSkill1" type="Panel" parent="HUD/BottomBar/RightSkills"]
 custom_minimum_size = Vector2(54, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="RSkill2" type="Panel" parent="HUD/BottomBar/RightSkills"]
 custom_minimum_size = Vector2(54, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="RSkill3" type="Panel" parent="HUD/BottomBar/RightSkills"]
 custom_minimum_size = Vector2(54, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="RSkill4" type="Panel" parent="HUD/BottomBar/RightSkills"]
 custom_minimum_size = Vector2(54, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="RSkill5" type="Panel" parent="HUD/BottomBar/RightSkills"]
 custom_minimum_size = Vector2(54, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
+theme_override_styles/panel = SubResource("4_slot_style")
 
 [node name="RSkill6" type="Panel" parent="HUD/BottomBar/RightSkills"]
 custom_minimum_size = Vector2(54, 42)
-theme_override_styles/panel = SubResource("3_slot_style")
-
-[node name="TouchControls" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("3_touch")
+theme_override_styles/panel = SubResource("4_slot_style")

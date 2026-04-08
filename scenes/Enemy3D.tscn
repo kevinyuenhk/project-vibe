@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://enemy3d"]
+
+[ext_resource type="Script" path="res://scripts/Enemy3D.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape3D" id="1_capsule"]
+radius = 0.33
+height = 1.05
+
+[sub_resource type="CapsuleMesh" id="2_body_mesh"]
+radius = 0.33
+mid_height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="3_body_mat"]
+albedo_color = Color(0.878431, 0.321569, 0.231373, 1)
+metallic = 0.02
+roughness = 0.7
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.78, 0)
+mesh = SubResource("2_body_mesh")
+surface_material_override/0 = SubResource("3_body_mat")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.78, 0)
+shape = SubResource("1_capsule")

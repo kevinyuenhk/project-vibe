@@ -1,21 +1,51 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1775548987
-export_presets.cfg::TextFile::-1::1775548987::0::1::::<><><>0<>0<><>::
-README.md::TextFile::-1::1775538238::0::1::::<><><>0<>0<><>::
-::res://assets/::1775538238
-::res://assets/audio/::1775537466
-::res://assets/fonts/::1775537466
-::res://assets/sprites/::1775548938
-player_placeholder.png::CompressedTexture2D::9096446054857756182::1775538238::1775548938::1::::<><><>0<>0<>1b4db8ccec1882f3f8fa684bb85bbcf0<>res://.godot/imported/player_placeholder.png-607694e0099b13c74ec004143f3ddec2.ctex::
-::res://assets/tilesets/::1775548938
-floor_tile.png::CompressedTexture2D::2304090226718287140::1775538238::1775548938::1::::<><><>0<>0<>df2a27818877d49deb83d554fe98cfab<>res://.godot/imported/floor_tile.png-3975132e876e75918a1f380b81a27be2.ctex::
-wall_tile.png::CompressedTexture2D::3575352156694958835::1775538238::1775548938::1::::<><><>0<>0<>68539135c8b46f34f941ed1585e482b6<>res://.godot/imported/wall_tile.png-03b8e89373e88487142ea51979deacd5.ctex::
-::res://build/::1775548987
-::res://scenes/::1775538238
-Main.tscn::PackedScene::471933::1775538238::0::1::::<><><>0<>0<><>::res://scripts/Main.gd<>uid://player::::res://scenes/Player.tscn<>res://scripts/TouchControls.gd
-Player.tscn::PackedScene::696258953::1775538238::0::1::::<><><>0<>0<><>::res://scripts/Player.gd<>res://assets/sprites/player_placeholder.png
-::res://scripts/::1775548938
-DungeonGenerator.gd::GDScript::1032832064883306787::1775538238::0::1::::<>Node2D<><>0<>0<><>::
-Main.gd::GDScript::6096357969743598154::1775538238::0::1::::<>Node2D<><>0<>0<><>::
-Player.gd::GDScript::5119178077874120185::1775538238::0::1::::<>CharacterBody2D<><>0<>0<><>::
-TouchControls.gd::GDScript::3204253510128650064::1775538238::0::1::::<>Control<><>0<>0<><>::
+::res://::1775575136
+export_presets.cfg::TextFile::-1::1775569014::0::1::::<><><>0<>0<><>::
+README.md::TextFile::-1::1775549107::0::1::::<><><>0<>0<><>::
+::res://assets/::1775549107
+::res://assets/sprites/::1775549107
+player_placeholder.png::CompressedTexture2D::9096446054857756182::1775549107::1775549107::1::::<><><>0<>0<>1b4db8ccec1882f3f8fa684bb85bbcf0<>res://.godot/imported/player_placeholder.png-607694e0099b13c74ec004143f3ddec2.ctex::
+::res://assets/tilesets/::1775549107
+floor_tile.png::CompressedTexture2D::2304090226718287140::1775549107::1775549107::1::::<><><>0<>0<>df2a27818877d49deb83d554fe98cfab<>res://.godot/imported/floor_tile.png-3975132e876e75918a1f380b81a27be2.ctex::
+wall_tile.png::CompressedTexture2D::3575352156694958835::1775549107::1775549107::1::::<><><>0<>0<>68539135c8b46f34f941ed1585e482b6<>res://.godot/imported/wall_tile.png-03b8e89373e88487142ea51979deacd5.ctex::
+::res://build/::1775575460
+index.apple-touch-icon.png::CompressedTexture2D::6337224830796968347::1775575460::1775552654::1::::<><><>0<>0<>08cfd6e1bdbb640d36ddc576670d2add<>res://.godot/imported/index.apple-touch-icon.png-dcd2c094bfa3f769157f6f2ba930cc56.ctex::
+index.icon.png::CompressedTexture2D::5408265898775687672::1775575460::1775552654::1::::<><><>0<>0<>4c312cce45b816549b62af564b0356d4<>res://.godot/imported/index.icon.png-96098a584bb713a61c1e8aa1df56a1bb.ctex::
+index.png::CompressedTexture2D::8605470481201778155::1775575460::1775552654::1::::<><><>0<>0<>3d522d1668ecbf1040d1f33ba0a20a7b<>res://.godot/imported/index.png-659c11691fe5279cf81f33eb936290a4.ctex::
+runtime_check.log::TextFile::-1::1775556120::0::1::::<><><>0<>0<><>::
+::res://Library/::1775573463
+::res://Library/Application Support/::1775573434
+::res://Library/Application Support/Godot/::1775573465
+editor_settings-4.6.tres::EditorSettings::-1::1775573465::0::1::::<><><>0<>0<><>::
+::res://Library/Application Support/Godot/app_userdata/::1775573434
+::res://Library/Application Support/Godot/app_userdata/Project Vibe/::1775574034
+::res://Library/Application Support/Godot/app_userdata/Project Vibe/logs/::1775575451
+godot2026-04-07T23.07.42.log::TextFile::-1::1775574462::0::1::::<><><>0<>0<><>::
+godot2026-04-07T23.10.01.log::TextFile::-1::1775574601::0::1::::<><><>0<>0<><>::
+godot2026-04-07T23.21.53.log::TextFile::-1::1775575313::0::1::::<><><>0<>0<><>::
+godot2026-04-07T23.24.11.log::TextFile::-1::1775575451::0::1::::<><><>0<>0<><>::
+godot.log::TextFile::-1::1775575451::0::1::::<><><>0<>0<><>::
+::res://Library/Application Support/Godot/app_userdata/Project Vibe/objectdb_snapshots/::1775573464
+::res://Library/Application Support/Godot/export_templates/::1775573463
+::res://Library/Application Support/Godot/feature_profiles/::1775573463
+::res://Library/Application Support/Godot/script_templates/::1775573463
+::res://Library/Application Support/Godot/text_editor_themes/::1775573463
+::res://Library/Caches/::1775573463
+::res://Library/Caches/Godot/::1775573464
+editor_doc_cache-4.6.res::Resource::3074115283459806918::1775573464::0::1::::<><><>0<>0<><>::
+::res://scenes/::1775572063
+Enemy3D.tscn::PackedScene::6775723867::1775572109::0::1::::<><><>0<>0<><>::res://scripts/Enemy3D.gd
+Enemy.tscn::PackedScene::-1::1775556059::0::1::::<><><>0<>0<><>::res://scripts/Enemy.gd
+Main3D.tscn::PackedScene::545555503::1775573413::0::1::::<><><>0<>0<><>::res://scripts/Main3D.gd<>uid://player3d::::res://scenes/Player3D.tscn
+Main.tscn::PackedScene::471933::1775571509::0::1::::<><><>0<>0<><>::res://scripts/Main.gd<>uid://player::::res://scenes/Player.tscn<>res://scripts/TouchControls.gd
+Player3D.tscn::PackedScene::804875350623::1775574136::0::1::::<><><>0<>0<><>::res://scripts/Player3D.gd
+Player.tscn::PackedScene::696258953::1775569461::0::1::::<><><>0<>0<><>::res://scripts/Player.gd<>res://assets/sprites/player_placeholder.png
+::res://scripts/::1775575169
+DungeonGenerator.gd::GDScript::1032832064883306787::1775571515::0::1::::<>Node2D<><>0<>0<><>::
+Enemy3D.gd::GDScript::4799811169157238372::1775574282::0::1::::<>CharacterBody3D<><>0<>0<><>::
+Enemy.gd::GDScript::1816747373101158727::1775556015::0::1::::<>CharacterBody2D<><>0<>0<><>::
+Main3D.gd::GDScript::328389192105413876::1775575544::0::1::::<>Node3D<><>0<>0<><>::
+Main.gd::GDScript::6096357969743598154::1775575169::0::1::::<>Node2D<><>0<>0<><>::
+Player3D.gd::GDScript::8286395760095573756::1775574126::0::1::::<>CharacterBody3D<><>0<>0<><>::
+Player.gd::GDScript::5119178077874120185::1775570157::0::1::::<>CharacterBody2D<><>0<>0<><>::
+TouchControls.gd::GDScript::3204253510128650064::1775549107::0::1::::<>Control<><>0<>0<><>::
