@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Project Vibe</title>
+<style>
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+canvas { display: block; width: 100%; height: 100%; }
+#loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #1a1a2e; color: #fff; font-family: sans-serif; z-index: 100; }
+#loading h1 { font-size: 2em; margin-bottom: 1em; }
+#loading .bar { width: 200px; height: 4px; background: #333; border-radius: 2px; overflow: hidden; }
+#loading .bar-fill { width: 0%; height: 100%; background: #4488ff; transition: width 0.3s; }
+#loading p { margin-top: 1em; color: #888; }
+</style>
+</head>
+<body>
+<div id="loading">
+  <h1>&#9876;&#65039; Project Vibe</h1>
+  <div class="bar"><div class="bar-fill" id="progress"></div></div>
+  <p id="status">Loading dungeon...</p>
+</div>
+<canvas id="canvas" style="display:none; width:100%; height:100%; position:fixed; top:0; left:0;"></canvas>
+<script src="index.js"></script>
+<script>
+// Register the COI service worker so COOP/COEP headers are present on all
+// responses. GitHub Pages does not send these headers natively; the SW
+// intercepts every fetch and injects them, enabling SharedArrayBuffer
+// (required for Godot thread support). The page reloads once on first visit
+// to activate the SW, then starts the engine normally.
+(function () {
+  var loadingEl = document.getElementById('loading');
+  var progressEl = document.getElementById('progress');
+  var statusEl = document.getElementById('status');
+  var canvasEl = document.getElementById('canvas');
+  var coiReloadKey = 'project_vibe_coi_reload_done';
+
+  if (!crossOriginIsolated && 'serviceWorker' in navigator) {
+    if (!sessionStorage.getItem(coiReloadKey)) {
+      navigator.serviceWorker.register('./coi-serviceworker.js').then(function () {
+        sessionStorage.setItem(coiReloadKey, '1');
+        window.location.reload();
+      }).catch(function (err) {
+        console.warn('COI service worker registration failed:', err);
+        statusEl.textContent = 'Starting without COI headers...';
+      });
+      return;
+    }
+
+    console.warn('COI headers still unavailable after reload; continuing boot.');
+    statusEl.textContent = 'Starting game...';
+  }
+
+  var engine = new Engine({
+    executable: 'index',
+    canvas: canvasEl,
+    canvasResizePolicy: 2,
+    onProgress: function (current, total) {
+      if (total > 0) {
+        progressEl.style.width = (current / total * 100) + '%';
+      }
+    },
+    onExit: function () {
+      loadingEl.style.display = 'flex';
+      statusEl.textContent = 'Game exited.';
+      canvasEl.style.display = 'none';
+    },
+  });
+
+  engine.startGame().then(function () {
+    loadingEl.style.display = 'none';
+    canvasEl.style.display = 'block';
+  }).catch(function (err) {
+    statusEl.textContent = 'Failed to start: ' + err.message;
+    console.error(err);
+  });
+}());
+</script>
+</body>
+</html>
+
